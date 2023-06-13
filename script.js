@@ -54,29 +54,29 @@ function GameController(gameboard) {
             }
         }
     }
-    const computerPlay=function (){
+    const resetAvailableSpots=function(){
         gameboard.availablespots = gameboard.availablespots.filter((element) => {
             return !gameboard.Xspots.includes(element) && !gameboard.Ospots.includes(element);
           });
-
-       var length=gameboard.availablespots.length
+    }
+    const getRandomAvailableSpot =function(){
+        var length=gameboard.availablespots.length
         if(length>0){
             var index = Math.floor(Math.random()*length);
         }
-
-        gameboard.spots[gameboard.availablespots[index]] = "O";
-        gameboard.Ospots.push(gameboard.availablespots[index]);
-        gameboard.availablespots = gameboard.availablespots.filter((element) => {
-            return !gameboard.Ospots.includes(element);
-          });
+        return gameboard.availablespots[index]
+    }
+    const computerPlay=function (){
+        resetAvailableSpots()
+        randomAvailableSpot = getRandomAvailableSpot();
+        gameboard.spots[randomAvailableSpot] = "O";
+        gameboard.Ospots.push(randomAvailableSpot);
+        resetAvailableSpots()
         checkWin(gameboard.Ospots);
         activePlayer = players.player1;
-   
     }
-    const aiPlay=function(){
-        //TODO implement AI Algorithm
-    }
-    return { play,computerPlay,aiPlay };
+ 
+    return { play,computerPlay };
 }
 
 function ScreenController(){
@@ -88,24 +88,18 @@ function ScreenController(){
     gameController = GameController(gameboard);
     container.addEventListener("click",(e)=>{
         const targetTile = e.target
-        if(gameboard.readyToPlay){
-            if(targetTile.textContent=="" ){
-                const index = targetTile.classList.value
-                gameController.play(index);
+        if(targetTile.textContent=="" && gameboard.readyToPlay){
+            const index = targetTile.classList.value
+            gameController.play(index);
+            updateScreen();
+            if(gameboard.gameMode=="PC" && gameboard.readyToPlay){
+                gameController.computerPlay();
                 updateScreen();
-                if(gameboard.gameMode=="PC"){
-                    gameController.computerPlay();
-                    updateScreen();
-                } else if(gameboard.gameMode=="AI"){
-                    gameController.aiPlay();
-                    updateScreen();
-                }
-            }
+            } 
         }
-        
     })
     
-    var nextPlayer = 1;
+    
     const updateScreen = function () {
         //make 3 by 3 tiles and sync tiles with Gameboard data
         container.innerHTML=""
@@ -125,6 +119,8 @@ function ScreenController(){
         }
     };
     //manage next player tiles status
+    var nextPlayer = 1;
+    
     const updatePlayerTiles=function(){
         const player1Header = document.querySelector(".one")
         const player2Header = document.querySelector(".two")
@@ -132,7 +128,7 @@ function ScreenController(){
             player1Header.classList.add("active")
             player2Header.classList.remove("active")
             nextPlayer=2
-        } else {
+        } else { 
             player2Header.classList.add("active")
             player1Header.classList.remove("active")
             nextPlayer=1
