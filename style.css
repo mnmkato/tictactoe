@@ -1,24 +1,52 @@
 body{
-    min-width: 75vh;
-    min-height: 75vh;
+    margin: 0;
+    min-width: 50vh;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    background-color: rgb(243, 241, 239);
 }
 .header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: 1rem 10rem 1rem;
     text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
+    height: 15vh;
+    box-shadow: 0rem 0.1rem rgb(181, 180, 178);
+}
+.title{
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+.player{
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: rgb(147, 125, 97);
+    background-color: antiquewhite;
+    border: 0.3rem solid antiquewhite;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    width: 1.5rem;
+}
+.active{
+    border: 0.3rem solid rgb(147, 125, 97);
 }
 .content{
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 65vh;
 }
 .container{
+    padding: 10px;
+    border-radius: 0.5rem;
     display: grid;
     grid-template-columns: repeat(3,1fr);
     grid-template-rows: repeat(3,1fr);
     gap: 10px;
     background-color: antiquewhite;
-    height: 75vh;
-    width: 75vh;
+    height: 55vh;
+    width: 55vh;
 }
 .container div{
     cursor: pointer;
@@ -30,4 +58,36 @@ body{
     font-weight: bold;
     font-size: 5rem;
     font-family: Arial, Helvetica, sans-serif;
+}
+.footer{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    justify-items: center;
+    height: 20vh;
+    box-shadow: 0rem 0rem 0rem 0.1rem rgb(181, 180, 178);
+    background-color: rgb(147, 125, 97);
+    color: antiquewhite;
+}
+.gamechoice{
+    grid-area: 1/1/2/4;
+}
+.footer h3{
+    margin: 0;
+}
+.gameMode{
+    font-weight: bold;
+    color: antiquewhite;
+    background-color: rgb(147, 125, 97);
+    text-align: center;
+    padding: 0.5rem;
+    cursor: pointer;
+    border: 0.1rem solid antiquewhite;
+    border-radius: 0.5rem;
+    width: 4rem;
+}
+.chosen{
+    border: 0.3rem solid rgb(147, 125, 97);
+    color: rgb(147, 125, 97);
+    background-color: antiquewhite;
 }
